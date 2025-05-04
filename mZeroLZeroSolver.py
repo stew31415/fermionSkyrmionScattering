@@ -12,15 +12,8 @@ def makeODE(l,eCharge,e,h,m,z,u):
     hz = 4*h*z/(z**2 + 4)
     hzSq = h*(z**2 - 4)/(z**2 + 4)
     eTerm = eCharge*z/2
-    '''
-    dudr[0] = -1*(eTerm - (l-1)/(z+eps))*u[0] - hz*u[3] - (hzSq - m - e)*u[2]
-    dudr[1] = -1*(eTerm - l/(z+eps))*u[1] - hz*u[2] + (hzSq + m + e)*u[3]
-    dudr[2] = (eTerm - l/(z+eps))*u[2] - hz*u[1] - (hzSq - m + e)*u[0]
-    dudr[3] = (eTerm - (l+1)/(z+eps))*u[3] - hz*u[0] + (hzSq + m - e)*u[1]
-    '''
     dudr[0] = -1*(eTerm - (l-1)/(z+eps))*u[0] + hz*u[0] - (hzSq - m - e)*u[1]
     dudr[1] = -1*(eTerm - l/(z+eps))*u[1] - hz*u[1] - (hzSq + m + e)*u[0]
-
     return dudr
 
 
@@ -31,7 +24,6 @@ def shoot(vars, lParam, eCharge, hParam, mParam, nPts, RMax):
     z = np.linspace(0., RMax, nPts)
 
     # Initial conditions
-    #initialCond = [0, 1, u3_0, 0]  # Assuming u1(0) = 0, u2(0) = 1, u3(0) = u3_0, u4(0) = 0
     initialCond = [0, 1]
 
     # Wrapper function for ODEs
@@ -65,7 +57,7 @@ def main():
     nPts = int(sys.argv[7])
 
     # Boundary at inf
-    RMax = 20.
+    RMax = 30.
 
     # right now, just doing l = 0
     # this sets u1 and u4 to 0 at origin
